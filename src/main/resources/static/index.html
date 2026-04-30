@@ -300,7 +300,7 @@
     
     try {
        
-        const res = await fetch("http://localhost:8081/api/users/login", {
+        const res = await fetch("https://house-rental-platform-fzj7.onrender.com/api/users/login", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(credentials)
@@ -322,7 +322,7 @@
         }
     } catch (err) {
         console.error("Error:", err);
-        showError("Network error: " + err.message + "\nMake sure backend is running on port 8081");
+        showError("Network error: " + err.message + "\nMake sure backend is running");
     } finally {
         loginBtn.innerHTML = originalText;
         loginBtn.style.opacity = "1";
