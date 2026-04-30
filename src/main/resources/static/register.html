@@ -168,7 +168,7 @@ sendOtpBtn.addEventListener("click", async () => {
     sendOtpBtn.disabled = true;
 
     try {
-        const res = await fetch("http://localhost:8081/api/users/send-otp", {
+        const res = await fetch("https://house-rental-platform-fzj7.onrender.com/api/users/send-otp", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({ email })
@@ -222,7 +222,7 @@ document.getElementById("form").addEventListener("submit", async (e) => {
     btn.disabled = true;
 
     try {
-        const res = await fetch("http://localhost:8081/api/users/verify-otp", {
+        const res = await fetch("https://house-rental-platform-fzj7.onrender.com/api/users/verify-otp", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({
