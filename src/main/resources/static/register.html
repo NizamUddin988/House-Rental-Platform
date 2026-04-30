@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="browser.png">
+    <title>House Rental Platform</title>
+    <style>
+        body{
+            background: rgb(30, 58, 95);
+            display: flex; 
+            align-items: center;              
+            justify-content: center;      
+        }
+        #container{
+            background: linear-gradient(to right, rgb(36, 59, 85), rgb(20, 30, 48));
+            border-radius: 1em;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1em;
+            margin: 0;
+        }
+        h1{
+            color: blanchedalmond;
+            text-decoration: solid;
+
+        }
+        #main{
+            width: 90%;
+            max-width: 400px;
+            margin: auto;
+          }
+        .input{
+            width: 100%;
+            height: 35px;
+            padding: 5px;
+            box-sizing: border-box;
+            border: 2px solid black;
+            border-radius: 5px;
+        }
+        #form{
+            display: flex;
+            flex-direction: column;
+        }
+        #text{
+            color: burlywood;
+            margin: 0.5px;
+        }
+        #registers{
+            width: 30%;
+            padding: 8px 20px;
+            font-size: 16px;
+            color: blanchedalmond;
+            background-color: #FF4500;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+        }
+        #registers:hover{
+            background-color: chocolate;
+        }
+          .toggle-password {
+            position: relative;
+            left: 45%;
+            bottom:2em ;
+            background: none;
+            border: none;
+            cursor: pointer;
+          }
+          .togglepassword {
+            position: relative;
+            left: 45%;
+            bottom: 2em;
+            background: none;
+            border: none;
+            cursor: pointer;
+
+          }
+
+          .toggle-password:hover {
+            background: rgba(110, 87, 224, 0.1);
+            transform: scale(1.1);
+          }
+          .otp-box{
+            display: flex;
+            gap: 10px;
+        }
+
+        #sendOtpBtn{
+            max-width: 40%;
+            white-space: nowrap;
+            text-align: center;
+            padding:2px;
+        }
+          #sendOtpBtn:hover::after{
+            color: blanchedalmond;
+          }   
+
+    </style>
+</head>
+<body>
+    <div id="container">
+    <h1><i>HOUSE RENTAL PLATFORM</i></h1>
+    <div id="main">
+        <form action="post" id="form"> 
+         <p id="text"> FULL NAME</p> <input type="text" id="Name" class="input"><br>
+         <p id="text">EMAIL</p><input type="text" id="Email" placeholder="example@gmail.com" class="input"><br>
+
+         <p id="text">OTP</p>
+            <input type="text" id="otp" class="input" placeholder="Enter OTP" >
+            <button type="button" id="sendOtpBtn"style="height:30px;width:8vw;color: #FF4500;font-weight: 900;font-size: 1em;">Send OTP</button><br>
+         <p id="text">CREATE PASSWORD</p><input type="password" id="CreatePassword" class="input"> <button type="button" class="togglepassword" onclick="togglePassword('CreatePassword')">🔒</button> 
+         <p id="text">CONFIRM PASSWORD</p><input type="password" id="ConfirmPassword" class="input"> <button type="button" class="toggle-password" onclick="togglePassword('ConfirmPassword')">🔒</button>
+         <p id="text">STATE</p><select id="States"class="input" >
+            <option value="Andhra Pradesh">Andhra Pradesh</option>
+            <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+            <option value="Assam">Assam</option>
+            <option value="Bihar">Bihar</option>
+            <option value="Chhattisgarh">Chhattisgarh</option>
+            <option value="Goa">Goa</option>
+            <option value="Gujarat">Gujarat</option>
+            <option value="Haryana">Haryana</option>
+            <option value="Himachal Pradesh">Himachal Pradesh</option>
+            <option value="Jharkhand">Jharkhand</option>
+            <option value="Karnataka">Karnataka</option>
+            <option value="Kerala">Kerala</option>
+            <option value="Madhya Pradesh">Madhya Pradesh</option>
+            <option value="Maharashtra">Maharashtra</option>
+            <option value="Manipur">Manipur</option>
+            <option value="Meghalaya">Meghalaya</option>
+            <option value="Mizoram">Mizoram</option>
+            <option value="Nagaland">Nagaland</option>
+            <option value="Odisha">Odisha</option>
+            <option value="Punjab">Punjab</option>
+            <option value="Rajasthan">Rajasthan</option>
+            <option value="Sikkim">Sikkim</option>
+            <option value="Tamil Nadu">Tamil Nadu</option>
+            <option value="Telangana">Telangana</option>
+            <option value="Tripura">Tripura</option>
+            <option value="Uttar Pradesh">Uttar Pradesh</option>
+            <option value="Uttarakhand">Uttarakhand</option>
+            <option value="West Bengal">West Bengal</option>
+        </select>
+        <!-- </form> -->
+    </div><br>
+    <button type="submit" id="registers" onclick="message(event)">Register</button> <p><span style="font-size: 20px;color: #eef0da;">Already have account <a href="index.html" style="font-size: 20px;font-weight: 800;">Log in</a></span></p>
+    
+      </form>
+      </div>
+      <script src="house.js"></script>
+  <script>
+const sendOtpBtn = document.getElementById("sendOtpBtn");
+const otpInput = document.getElementById("otp");
+
+let otpSent = false;
+
+
+sendOtpBtn.addEventListener("click", async () => {
+    const email = document.getElementById("Email").value;
+
+    if (!email) {
+        alert("Enter email first");
+        return;
+    }
+
+    sendOtpBtn.innerText = "Sending...";
+    sendOtpBtn.disabled = true;
+
+    try {
+        const res = await fetch("http://localhost:8081/api/users/send-otp", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({ email })
+        });
+
+        const msg = await res.text();
+        alert(msg);
+
+        if (res.ok) {
+            otpSent = true;
+            otpInput.style.display = "block"; // show OTP field
+        } else {
+            sendOtpBtn.disabled = false;
+        }
+
+    } catch (err) {
+        alert("Error sending OTP");
+        sendOtpBtn.disabled = false;
+    }
+
+    sendOtpBtn.innerText = "Send OTP";
+});
+
+document.getElementById("form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const fullName = Name.value;
+    const email = Email.value;
+    const password = CreatePassword.value;
+    const confirmPassword = ConfirmPassword.value;
+    const state = States.value;
+    const otp = otpInput.value;
+
+    if (!otpSent) {
+        alert("Please send OTP first");
+        return;
+    }
+
+    if (!otp) {
+        alert("Enter OTP");
+        return;
+    }
+
+    if (password !== confirmPassword) {
+        alert("Passwords do not match");
+        return;
+    }
+
+    const btn = document.getElementById("registers");
+    btn.innerText = "Verifying...";
+    btn.disabled = true;
+
+    try {
+        const res = await fetch("http://localhost:8081/api/users/verify-otp", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+                fullName,
+                email,
+                password,
+                state,
+                otp
+            })
+        });
+
+        const msg = await res.text();
+        alert(msg);
+
+        if (res.ok) {
+            window.location.href = "index.html";
+        }
+
+    } catch (err) {
+        alert("Error: " + err.message);
+    }
+
+    btn.innerText = "Register";
+    btn.disabled = false;
+});
+
+
+// PASSWORD TOGGLE (unchanged)
+function togglePassword(inputId) {
+    const input = document.getElementById(inputId);
+    const button = input.nextElementSibling;
+
+    if (input.type === "password") {
+        input.type = "text";
+        button.textContent = "🔓";
+    } else {
+        input.type = "password";
+        button.textContent = "🔒";
+    }
+}
+</script>
+</body>
+</html>

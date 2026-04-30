@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="browser.png">
+    <title>House Rental Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .nav {
+            background: linear-gradient(135deg, #1c1d1d 0%, #35424a 100%);
+            height: 80px;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 50px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav h2 {
+            color: white;
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        .profile-container {
+            position: relative;
+        }
+
+        #par {
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        #par:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        #details {
+            position: absolute;
+            right: 0;
+            top: 100%;
+            background-color: #2c3e50;
+            border: 1px solid #34495e;
+            border-radius: 8px;
+            padding: 20px;
+            min-width: 250px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            display: none;
+            z-index: 1001;
+        }
+
+        #details strong {
+            display: block;
+            color: #ecf0f1;
+            font-size: 16px;
+            margin-bottom: 10px;
+            padding: 5px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        #details strong:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .hero-section {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), 
+                        url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            margin-bottom: 40px;
+        }
+
+        .hero-section h1 {
+            color: #2c3e50;
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .hero-section p {
+            color: #7f8c8d;
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            padding: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .house-card {
+            height: 280px;
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .house-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .house-image {
+            height: 70%;
+            width: 100%;
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.5s ease;
+        }
+
+        .house-card:hover .house-image {
+            transform: scale(1.05);
+        }
+
+        .house-label {
+            height: 30%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: white;
+            color: #2c3e50;
+            font-size: 22px;
+            font-weight: 600;
+            text-align: center;
+            padding: 15px;
+        }
+
+        .about-section {
+            background-color: #2c3e50;
+            color: white;
+            padding: 60px 20px;
+            margin-top: 60px;
+        }
+
+        .about-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .about-text h2 {
+            font-size: 2.5rem;
+            margin-bottom: 25px;
+            color: #ecf0f1;
+        }
+
+        .about-text p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            color: #bdc3c7;
+        }
+
+        .about-features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .feature {
+            background-color: #34495e;
+            padding: 25px;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .feature:hover {
+            transform: translateY(-5px);
+            background-color: #3d566e;
+        }
+
+        .feature h3 {
+            color: #3498db;
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+
+        .feature p {
+            color: #ecf0f1;
+            font-size: 1rem;
+        }
+
+        footer {
+            background-color: #1c1d1d;
+            color: white;
+            padding: 50px 20px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+        }
+
+        .footer-section h3 {
+            color: #3498db;
+            font-size: 1.4rem;
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-section ul li a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 1rem;
+        }
+
+        .footer-section ul li a:hover {
+            color: #3498db;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            margin-top: 30px;
+            border-top: 1px solid #34495e;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav {
+                padding: 0 20px;
+                flex-direction: column;
+                height: auto;
+                padding: 15px;
+            }
+            
+            .nav h2 {
+                font-size: 24px;
+                margin-bottom: 10px;
+            }
+            
+            .hero-section h1 {
+                font-size: 2rem;
+            }
+            
+            .container {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 15px;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .about-features {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            
+            .house-card {
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <h2>HOUSE RENTAL PLATFORM</h2>
+        <div class="profile-container">
+            <p id="par">Profile▼</p>
+            <div id="details">
+                <strong id="s1"></strong>
+                <strong id="s2"></strong>
+                <strong id="s3"></strong>
+            </div>
+        </div>
+    </div>
+    
+    <div class="hero-section">
+        <h1 class="head">Welcome</h1>
+        <h1>Find Your Perfect Home</h1>
+        <p>Discover a wide range of properties for rent. From cozy apartments to luxurious villas, we have the perfect home for every lifestyle and budget.</p>
+    </div>
+    
+    <div class="container">
+        <a href="a.html" style="text-decoration: none;">
+            <div class="house-card" onclick="setHouseType('Apartment')">
+                <div class="house-image" style="background-image: url('https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80');"></div>
+                <div class="house-label">Apartment</div>
+            </div>
+        </a>
+        
+        <a href="a.html" style="text-decoration: none;">
+            <div class="house-card" onclick="setHouseType('Bungalow')">
+                <div class="house-image" style="background-image: url('data:image/jpeg;base64,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');"></div>
+                <div class="house-label">Bungalow</div>
+            </div>
+        </a>
+        
+        <a href="a.html" style="text-decoration: none;">
+            <div class="house-card" onclick="setHouseType('Cottage')">
+                <div class="house-image" style="background-image: url('https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80');"></div>
+                <div class="house-label">Cottage</div>
+            </div>
+        </a>
+        
+        <a href="a.html" style="text-decoration: none;">
+            <div class="house-card" onclick="setHouseType('Duplex')">
+                <div class="house-image" style="background-image: url('https://images.unsplash.com/photo-1560185007-cde436f6a4d0?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80');"></div>
+                <div class="house-label">Duplex</div>
+            </div>
+        </a>
+        
+        <a href="a.html" style="text-decoration: none;">
+            <div class="house-card" onclick="setHouseType('Villa')">
+                <div class="house-image" style="background-image: url('https://images.unsplash.com/photo-1613490493576-7fde63acd811?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80');"></div>
+                <div class="house-label">Villa</div>
+            </div>
+        </a>
+        
+        <a href="a.html" style="text-decoration: none;">
+            <div class="house-card" onclick="setHouseType('Mansion')">
+                <div class="house-image" style="background-image: url('https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80');"></div>
+                <div class="house-label">Mansion</div>
+            </div>
+        </a>
+        
+        <a href="a.html" style="text-decoration: none;">
+            <div class="house-card" onclick="setHouseType('Farm House')">
+                <div class="house-image" style="background-image: url('https://images.unsplash.com/photo-1480074568708-e7b720bb3f09?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80');"></div>
+                <div class="house-label">Farm House</div>
+            </div>
+        </a>
+        
+        <a href="a.html" style="text-decoration: none;">
+            <div class="house-card" onclick="setHouseType('Row House')">
+                <div class="house-image" style="background-image: url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80');"></div>
+                <div class="house-label">Row House</div>
+            </div>
+        </a>
+        
+        <a href="a.html" style="text-decoration: none;">
+            <div class="house-card" onclick="setHouseType('Studio House')">
+                <div class="house-image" style="background-image: url('https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80');"></div>
+                <div class="house-label">Studio House</div>
+            </div>
+        </a>
+        
+        <a href="a.html" style="text-decoration: none;">
+            <div class="house-card" onclick="setHouseType('Separate House')">
+                <div class="house-image" style="background-image: url('https://images.unsplash.com/photo-1570129477492-45c003edd2be?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80');"></div>
+                <div class="house-label">Separate House</div>
+            </div>
+        </a>
+    </div>
+    
+    <div class="about-section">
+        <div class="about-content">
+            <div class="about-text">
+                <h2>About Our Rental Platform</h2>
+                <p>Welcome to the premier destination for finding your perfect rental home. We bridge the gap between tenants and property owners, making the rental process seamless and efficient.</p>
+                <p>With over 10,000 properties listed across the country, we offer diverse options for every need and budget. Our platform is designed with user experience in mind, providing detailed property information, virtual tours, and secure booking processes.</p>
+                <p>Our mission is to simplify house hunting and create meaningful connections between landlords and tenants. We verify all listings to ensure authenticity and provide support throughout your rental journey.</p>
+            </div>
+            <div class="about-features">
+                <div class="feature">
+                    <h3>Verified Listings</h3>
+                    <p>Every property is personally verified by our team to ensure accuracy and authenticity.</p>
+                </div>
+                <div class="feature">
+                    <h3>24/7 Support</h3>
+                    <p>Round-the-clock customer support to assist you with any questions or concerns.</p>
+                </div>
+                <div class="feature">
+                    <h3>Secure Payments</h3>
+                    <p>Safe and encrypted payment gateway for all your rental transactions.</p>
+                </div>
+                <div class="feature">
+                    <h3>Legal Assistance</h3>
+                    <p>Expert guidance on rental agreements and legal documentation.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Available Houses</h3>
+                <ul>
+                    <li><a href="#">Apartments</a></li>
+                    <li><a href="#">Bungalows</a></li>
+                    <li><a href="#">Cottages</a></li>
+                    <li><a href="#">Duplexes</a></li>
+                    <li><a href="#">Villas</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Rental Search</h3>
+                <ul>
+                    <li><a href="#">Browse Houses</a></li>
+                    <li><a href="#">Furnished Apartments</a></li>
+                    <li><a href="#">Pet-Friendly Rentals</a></li>
+                    <li><a href="#">Luxury Villas</a></li>
+                    <li><a href="#">Budget Options</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>For Landlords</h3>
+                <ul>
+                    <li><a href="#">List Your Property</a></li>
+                    <li><a href="#">Property Management</a></li>
+                    <li><a href="#">Pricing Plans</a></li>
+                    <li><a href="#">Landlord Resources</a></li>
+                    <li><a href="#">Legal Guidelines</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <ul>
+                    <li><a href="#">Customer Support</a></li>
+                    <li><a href="#">Feedback</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Partnerships</a></li>
+                    <li><a href="#">Press Inquiries</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2024 House Rental Platform. All rights reserved. | Privacy Policy | Terms of Service</p>
+        </div>
+    </footer>
+    <script src="house.js"></script>
+    <script>
+        const par = document.getElementById("par");
+        const details = document.getElementById("details");
+
+
+        const savedName = localStorage.getItem("Name");
+        const headerElement = document.querySelector("h1.head");
+
+        
+if (headerElement) {
+    headerElement.textContent = savedName ? `Welcome, ${savedName}` : 'Welcome, Guest!';
+}    
+        par.addEventListener("click", function(e) {
+            e.stopPropagation();
+            details.style.display = details.style.display === "block" ? "none" : "block";
+            par.innerHTML = details.style.display === "block" ? "Profile▲" : "Profile▼";
+            // const savedName = localStorage.getItem("Name");
+            const savedMail = localStorage.getItem("Email");
+            const savedOption = localStorage.getItem("States");
+  
+            document.getElementById("s1").textContent = savedName ? `Name: ${savedName}` : "Name: Not set";
+            document.getElementById("s2").textContent = savedMail ? `Email: ${savedMail}` : "Email: Not set";
+            document.getElementById("s3").textContent = savedOption ? `Location: ${savedOption}` : "Location: Not set";
+        });
+        document.addEventListener("click", function(e) {
+            if (!par.contains(e.target) && !details.contains(e.target)) {
+                details.style.display = "none";
+                par.innerHTML = "Profile▼";
+            }
+        });
+        function setHouseType(houseName) {
+            localStorage.setItem("selectedHouse", houseName);
+        }
+        window.addEventListener('DOMContentLoaded', (event) => {
+            if (!localStorage.getItem("Name")) {
+                localStorage.setItem("Name", "John Doe");
+                localStorage.setItem("Email", "john@example.com");
+                localStorage.setItem("States", "California");
+            }
+        });
+    </script>
+</body>
+</html>

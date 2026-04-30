@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="browser.png">
+    <title>House Rental Platform | Login</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            /* background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
+             background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgcJaS0obteU7IKxXgtdamGYzhRry-tNpNFQ&s");
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+         #container{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-items: center;
+        }
+
+        h1 {
+            margin-bottom: 10%;
+            color: white;
+            font-size: 28px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        #main {
+            width: 400px;
+            background: blanchedalmond;
+            border-radius: 12px;
+            padding: 40px 35px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        #form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        #text {
+            color: #333;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            margin-top: 5px;
+        }
+
+        .input {
+            height: 45px;
+            width: 100%;
+            padding: 0 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.2s;
+            outline: none;
+        }
+
+        .input:focus {
+            border-color: #667eea;
+        }
+
+        /* Password wrapper */
+        .password-wrapper {
+            position: relative;
+            width: 100%;
+        }
+
+        .password-wrapper .input {
+            padding-right: 40px;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            color: #999;
+        }
+
+        .toggle-password:hover {
+            color: #667eea;
+        }
+
+        #registers {
+            margin-top: 25px;
+            padding: 12px;
+            background: #667eea;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        #registers:hover {
+            background: #5a67d8;
+        }
+
+        #register {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            display: block;
+        }
+
+        /* Footer options */
+        .form-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+            font-size: 13px;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #666;
+            cursor: pointer;
+        }
+
+        .checkbox-label input {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+
+        .forgot-link {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .forgot-link:hover {
+            text-decoration: underline;
+        }
+
+        .signup-link {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            color: #666;
+            font-size: 13px;
+        }
+
+        .signup-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+
+        .error-message {
+            background: #fee;
+            color: #e74c3c;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            text-align: center;
+            margin-top: 15px;
+            display: none;
+        }
+
+        @media (max-width: 480px) {
+            #main {
+                width: 90%;
+                padding: 30px 25px;
+            }
+            
+            h1 {
+                font-size: 22px;
+                top: 20px;
+            }
+            
+            body {
+                padding-top: 80px;
+            }
+             .container{
+                max-width: 95%;
+                padding: 25px;
+    }
+        }
+        
+    </style>
+</head>
+<body>
+    <div id="container">
+    <h1>🏠 HOUSE RENTAL PLATFORM</h1>
+    
+    <div id="main">
+        <form id="form"> 
+            <label id="text">Email</label>
+            <input type="email" id="Email" placeholder="example@gmail.com" class="input" required>
+            
+            <label id="text">Password</label>
+            <div class="password-wrapper">
+                <input type="password" id="Password" class="input" placeholder="Enter password" required>
+                <button type="button" class="toggle-password" onclick="togglePassword()">🔒</button>
+            </div>
+            
+            <div class="form-footer">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="remember"> Remember me
+                </label>
+                <a href="#" class="forgot-link">Forgot Password?</a>
+            </div>
+            
+            <div id="registers">
+                <a href="#" id="register" onclick="handleLogin(event)">Login</a>
+            </div>
+            
+            <div class="signup-link">
+                Don't have an account? <a href="register.html">Register</a>
+            </div>
+            
+            <div id="errorMsg" class="error-message"></div>
+        </form>
+    </div>
+    </div>
+
+    <script>
+
+        function togglePassword() {
+            const passwordInput = document.getElementById("Password");
+            const toggleBtn = document.querySelector(".toggle-password");
+            
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                toggleBtn.textContent = "🔓";
+            } else {
+                passwordInput.type = "password";
+                toggleBtn.textContent = "🔒";
+            }
+        }
+
+        // Show error message
+        function showError(message) {
+            const errorDiv = document.getElementById("errorMsg");
+            errorDiv.textContent = message;
+            errorDiv.style.display = "block";
+            setTimeout(() => {
+                errorDiv.style.display = "none";
+            }, 3000);
+        }
+
+    async function handleLogin(event) {
+    event.preventDefault();
+    
+    const email = document.getElementById("Email").value;
+    const password = document.getElementById("Password").value;
+    const remember = document.getElementById("remember").checked;
+ 
+    if (!email) {
+        showError("Please enter your email");
+        return;
+    }
+    if (!password) {
+        showError("Please enter your password");
+        return;
+    }
+    if (password.length < 6) {
+        showError("Password must be at least 6 characters");
+        return;
+    }
+
+    if (remember) {
+        localStorage.setItem("savedEmail", email);
+    } else {
+        localStorage.removeItem("savedEmail");
+    }
+    
+    const credentials = { email, password };
+
+    const loginBtn = document.getElementById("registers");
+    const originalText = loginBtn.innerHTML;
+    loginBtn.innerHTML = "Logging in...";
+    loginBtn.style.opacity = "0.7";
+    
+    try {
+       
+        const res = await fetch("http://localhost:8081/api/users/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(credentials)
+        });
+        
+        if (res.ok) {
+            const data = await res.json();
+            alert(data.message || "Login successful!");
+       
+            localStorage.setItem("userId", data.id);
+            localStorage.setItem("userName", data.fullName);
+            window.location.href = "homepage.html";
+        } else if (res.status === 401) {
+            const error = await res.text();
+            showError(error);
+        } else {
+            const txt = await res.text();
+            showError("Error: " + txt);
+        }
+    } catch (err) {
+        console.error("Error:", err);
+        showError("Network error: " + err.message + "\nMake sure backend is running on port 8081");
+    } finally {
+        loginBtn.innerHTML = originalText;
+        loginBtn.style.opacity = "1";
+    }
+}
+        document.addEventListener("DOMContentLoaded", function() {
+            const savedEmail = localStorage.getItem("savedEmail");
+            if (savedEmail) {
+                document.getElementById("Email").value = savedEmail;
+                document.getElementById("remember").checked = true;
+            }
+        });
+        
+        document.getElementById("Password").addEventListener("keypress", function(e) {
+            if (e.key === "Enter") {
+                handleLogin(e);
+            }
+        });
+    </script>
+</body>
+</html>
