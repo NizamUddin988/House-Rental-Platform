@@ -1,0 +1,19 @@
+# Secret config files
+src/main/resources/application-local.properties
+.env
+
+# Maven build output
+target/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+out/
+
+# VS Code
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
