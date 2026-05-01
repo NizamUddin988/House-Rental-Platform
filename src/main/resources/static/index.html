@@ -255,6 +255,14 @@
             }
         }
 
+         setInterval(() => {
+        fetch("https://house-rental-platform-fzj7.onrender.com/api/users/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email: "ping@ping.com", password: "ping" })
+        }).catch(() => {});
+    }, 14 * 60 * 1000);
+
         // Show error message
         function showError(message) {
             const errorDiv = document.getElementById("errorMsg");
