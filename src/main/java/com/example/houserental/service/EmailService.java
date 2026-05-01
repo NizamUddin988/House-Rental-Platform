@@ -21,7 +21,8 @@ public class EmailService {
                     "sender": {"email": "%s"},
                     "to": [{"email": "%s"}],
                     "subject": "OTP Verification",
-                    "textContent": "Dear User,\\n\\nYour OTP is: %s\\n\\nRegards,\\nHouse Rental Platform Team"
+                    "textContent": "Dear User,\\n\\nThank you for choosing House Rental Platform. To complete your verification process, please use the One-Time Password (OTP) provided below. This OTP is valid for a limited time and should not be shared with anyone for security reasons.\\n\\nIf you did not request this verification, please ignore this email.
+\\n\\nYour OTP is: %s\\n\\nRegards,\\nHouse Rental Platform Team"
                 }
                 """.formatted(fromEmail, toEmail, otp);
 
